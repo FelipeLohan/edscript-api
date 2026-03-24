@@ -37,6 +37,13 @@ public class MatchesController {
         return ResponseEntity.ok(matchesService.getInplayMatches(sportId));
     }
 
+    @GetMapping("/upcoming")
+    public ResponseEntity<Object> getUpcomingMatches(
+            @RequestParam(name = "sport_id", defaultValue = "1") int sportId,
+            @RequestParam(name = "league_id", defaultValue = "155") String leagueId) {
+        return ResponseEntity.ok(matchesService.getUpcomingMatches(sportId, leagueId));
+    }
+
     @GetMapping("/inplay/{id}")
     public ResponseEntity<Object> getInplayEventView(@PathVariable String id) {
         return ResponseEntity.ok(matchesService.getInplayEventView(id));

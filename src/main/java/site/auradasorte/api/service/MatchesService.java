@@ -58,6 +58,13 @@ public class MatchesService {
                 .body(Object.class);
     }
 
+    public Object getUpcomingMatches(int sportId, String leagueId) {
+        return betClient.get()
+                .uri("/v3/events/upcoming?sport_id={sportId}&token={token}&league_id={leagueId}", sportId, token, leagueId)
+                .retrieve()
+                .body(Object.class);
+    }
+
     public Object getInplayEventView(String eventId) {
         return betClient.get()
                 .uri("/v1/event/view?token={token}&event_id={eventId}", token, eventId)

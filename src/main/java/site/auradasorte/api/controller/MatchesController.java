@@ -24,14 +24,14 @@ public class MatchesController {
         this.matchesService = matchesService;
     }
 
-    @Operation(summary = "Listar partidas", description = "Retorna a lista de partidas mockadas")
+    @Operation(summary = "Listar partidas análisadas Mockadas", description = "Retorna a lista de partidas mockadas")
     @ApiResponse(responseCode = "200", description = "Lista de partidas retornada com sucesso")
     @GetMapping
     public ResponseEntity<Object> getMatches() {
         return ResponseEntity.ok(matchesService.getMatches());
     }
 
-    @Operation(summary = "Buscar partida por ID", description = "Retorna os dados de uma partida específica pelo seu ID")
+    @Operation(summary = "Buscar partida análisada Mockada por ID", description = "Retorna os dados de uma partida específica pelo seu ID")
     @ApiResponses({
         @ApiResponse(responseCode = "200", description = "Partida encontrada"),
         @ApiResponse(responseCode = "404", description = "Partida não encontrada")
@@ -46,7 +46,7 @@ public class MatchesController {
         return ResponseEntity.ok(match);
     }
 
-    @Operation(summary = "Partidas ao vivo", description = "Retorna as partidas em andamento de um determinado esporte via B365 API")
+    @Operation(summary = "Todas as partidas ao vivo", description = "Retorna as partidas em andamento de um determinado esporte via B365 API")
     @ApiResponse(responseCode = "200", description = "Partidas ao vivo retornadas com sucesso")
     @GetMapping("/inplay")
     public ResponseEntity<Object> getInplayMatches(
@@ -54,7 +54,7 @@ public class MatchesController {
         return ResponseEntity.ok(matchesService.getInplayMatches(sportId));
     }
 
-    @Operation(summary = "Próximas partidas", description = "Retorna as próximas partidas de uma liga. Por padrão retorna a Série A do Brasileirão (league_id=155)")
+    @Operation(summary = "Todas as próximas partidas", description = "Retorna as próximas partidas de uma liga. Por padrão retorna a Série A do Brasileirão (league_id=155)")
     @ApiResponse(responseCode = "200", description = "Próximas partidas retornadas com sucesso")
     @GetMapping("/upcoming")
     public ResponseEntity<Object> getUpcomingMatches(
@@ -63,7 +63,7 @@ public class MatchesController {
         return ResponseEntity.ok(matchesService.getUpcomingMatches(sportId, leagueId));
     }
 
-    @Operation(summary = "Detalhes de evento ao vivo", description = "Retorna os detalhes de um evento específico via B365 API (v1/event/view)")
+    @Operation(summary = "Detalhes de evento ao vivo por id", description = "Retorna os detalhes de um evento específico via B365 API (v1/event/view)")
     @ApiResponse(responseCode = "200", description = "Detalhes do evento retornados com sucesso")
     @GetMapping("/play/{id}")
     public ResponseEntity<Object> getPlayEventView(
@@ -71,7 +71,7 @@ public class MatchesController {
         return ResponseEntity.ok(matchesService.getPlayEventView(id));
     }
 
-    @Operation(summary = "Analisar partida", description = "Busca os dados da partida na B365 e envia para o serviço de análise")
+    @Operation(summary = "Analisar partida usando o serviço de IA", description = "Busca os dados da partida na B365 e envia para o serviço de análise")
     @ApiResponses({
         @ApiResponse(responseCode = "200", description = "Análise retornada com sucesso"),
         @ApiResponse(responseCode = "400", description = "match_id não informado")

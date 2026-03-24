@@ -65,7 +65,7 @@ public class MatchesService {
                 .body(Object.class);
     }
 
-    public Object getInplayEventView(String eventId) {
+    public Object getPlayEventView(String eventId) {
         return betClient.get()
                 .uri("/v1/event/view?token={token}&event_id={eventId}", token, eventId)
                 .retrieve()

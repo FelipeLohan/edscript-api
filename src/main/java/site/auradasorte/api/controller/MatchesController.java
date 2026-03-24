@@ -44,9 +44,9 @@ public class MatchesController {
         return ResponseEntity.ok(matchesService.getUpcomingMatches(sportId, leagueId));
     }
 
-    @GetMapping("/inplay/{id}")
-    public ResponseEntity<Object> getInplayEventView(@PathVariable String id) {
-        return ResponseEntity.ok(matchesService.getInplayEventView(id));
+    @GetMapping("/play/{id}")
+    public ResponseEntity<Object> getPlayEventView(@PathVariable String id) {
+        return ResponseEntity.ok(matchesService.getPlayEventView(id));
     }
 
     @GetMapping("/analyze")

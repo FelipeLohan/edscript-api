@@ -37,6 +37,11 @@ public class MatchesController {
         return ResponseEntity.ok(matchesService.getInplayMatches(sportId));
     }
 
+    @GetMapping("/inplay/{id}")
+    public ResponseEntity<Object> getInplayEventView(@PathVariable String id) {
+        return ResponseEntity.ok(matchesService.getInplayEventView(id));
+    }
+
     @GetMapping("/analyze")
     public ResponseEntity<Object> analyzeMatch(@RequestParam(name = "match_id") String matchId) {
         return ResponseEntity.ok(matchesService.analyzeMatch(matchId));

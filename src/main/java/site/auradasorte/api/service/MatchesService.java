@@ -58,6 +58,13 @@ public class MatchesService {
                 .body(Object.class);
     }
 
+    public Object getInplayEventView(String eventId) {
+        return betClient.get()
+                .uri("/v1/event/view?token={token}&event_id={eventId}", token, eventId)
+                .retrieve()
+                .body(Object.class);
+    }
+
     public Object analyzeMatch(String matchId) {
         Object matchData = betClient.get()
                 .uri("/v3/event/view?token={token}&event_id={matchId}", token, matchId)

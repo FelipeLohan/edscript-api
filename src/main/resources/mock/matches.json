@@ -1,0 +1,188 @@
+[
+  {
+    "match": {
+      "id": "br2025-rd01-flu-bot",
+      "competition": {
+        "id": "brasileirao-serie-a",
+        "name": "Brasileirão",
+        "season": 2025
+      },
+      "status": "scheduled",
+      "datetime": "2025-03-24T16:00:00-03:00",
+      "homeTeam": {
+        "id": "fluminense",
+        "name": "Fluminense",
+        "shortName": "FLU",
+        "badgeUrl": "/assets/badges/fluminense.png",
+        "primaryColor": "#6EAB3D",
+        "secondaryColor": "#891430"
+      },
+      "awayTeam": {
+        "id": "botafogo",
+        "name": "Botafogo",
+        "shortName": "BOT",
+        "badgeUrl": "/assets/badges/botafogo.png",
+        "primaryColor": "#000000",
+        "secondaryColor": "#FFFFFF"
+      },
+      "odds": {
+        "provider": "mockbet",
+        "updatedAt": "2025-03-24T10:00:00-03:00",
+        "fullTime": {
+          "homeWin": 2.8,
+          "draw": 3.1,
+          "awayWin": 2.6
+        }
+      },
+      "winProbability": {
+        "home": 38,
+        "draw": 28,
+        "away": 34
+      },
+      "eventProbabilities": [
+        { "key": "over_2_5", "label": "Mais de 2.5 gols", "probability": 55, "iconType": "globe" },
+        { "key": "under_2_5", "label": "Menos de 2.5 gols", "probability": 45, "iconType": "globe" },
+        { "key": "both_teams_score", "label": "Ambas marcam", "probability": 62, "iconType": "flag" },
+        { "key": "red_card", "label": "Cartão vermelho", "probability": 18, "iconType": "card" }
+      ],
+      "comparison": {
+        "home": { "attack": 76, "defense": 70, "momentum": 80, "possession": 54 },
+        "away": { "attack": 74, "defense": 72, "momentum": 65, "possession": 46 }
+      },
+      "recentForm": {
+        "home": ["W", "W", "W", "D", "L"],
+        "away": ["W", "L", "D", "W", "L"]
+      },
+      "aiAnalysis": {
+        "favoredTeam": "home",
+        "favoredTeamName": "Fluminense",
+        "confidence": 58,
+        "summary": "Fluminense tem melhor desempenho recente e mando de campo. Últimos 3 jogos em casa foram vitórias."
+      }
+    }
+  },
+  {
+    "match": {
+      "id": "br2025-rd01-pal-cor",
+      "competition": {
+        "id": "brasileirao-serie-a",
+        "name": "Brasileirão",
+        "season": 2025
+      },
+      "status": "scheduled",
+      "datetime": "2025-03-24T18:30:00-03:00",
+      "homeTeam": {
+        "id": "palmeiras",
+        "name": "Palmeiras",
+        "shortName": "PAL",
+        "badgeUrl": "/assets/badges/palmeiras.png",
+        "primaryColor": "#006437",
+        "secondaryColor": "#FFFFFF"
+      },
+      "awayTeam": {
+        "id": "corinthians",
+        "name": "Corinthians",
+        "shortName": "COR",
+        "badgeUrl": "/assets/badges/corinthians.png",
+        "primaryColor": "#000000",
+        "secondaryColor": "#FFFFFF"
+      },
+      "odds": {
+        "provider": "mockbet",
+        "updatedAt": "2025-03-24T10:00:00-03:00",
+        "fullTime": {
+          "homeWin": 1.85,
+          "draw": 3.4,
+          "awayWin": 4.2
+        }
+      },
+      "winProbability": {
+        "home": 54,
+        "draw": 24,
+        "away": 22
+      },
+      "eventProbabilities": [
+        { "key": "over_2_5", "label": "Mais de 2.5 gols", "probability": 48, "iconType": "globe" },
+        { "key": "under_2_5", "label": "Menos de 2.5 gols", "probability": 52, "iconType": "globe" },
+        { "key": "both_teams_score", "label": "Ambas marcam", "probability": 44, "iconType": "flag" },
+        { "key": "red_card", "label": "Cartão vermelho", "probability": 27, "iconType": "card" }
+      ],
+      "comparison": {
+        "home": { "attack": 88, "defense": 82, "momentum": 75, "possession": 58 },
+        "away": { "attack": 65, "defense": 60, "momentum": 50, "possession": 42 }
+      },
+      "recentForm": {
+        "home": ["W", "W", "D", "W", "W"],
+        "away": ["L", "D", "L", "W", "D"]
+      },
+      "aiAnalysis": {
+        "favoredTeam": "home",
+        "favoredTeamName": "Palmeiras",
+        "confidence": 72,
+        "summary": "Palmeiras domina o confronto recente e possui elenco superior. Corinthians sem vencer fora de casa há 4 rodadas."
+      }
+    }
+  },
+  {
+    "match": {
+      "id": "br2025-rd01-atl-sao",
+      "competition": {
+        "id": "brasileirao-serie-a",
+        "name": "Brasileirão",
+        "season": 2025
+      },
+      "status": "live",
+      "datetime": "2025-03-24T14:00:00-03:00",
+      "homeTeam": {
+        "id": "atletico-mg",
+        "name": "Atlético MG",
+        "shortName": "CAM",
+        "badgeUrl": "/assets/badges/atletico-mg.png",
+        "primaryColor": "#000000",
+        "secondaryColor": "#FFFFFF"
+      },
+      "awayTeam": {
+        "id": "sao-paulo",
+        "name": "São Paulo",
+        "shortName": "SPF",
+        "badgeUrl": "/assets/badges/sao-paulo.png",
+        "primaryColor": "#E30613",
+        "secondaryColor": "#FFFFFF"
+      },
+      "odds": {
+        "provider": "mockbet",
+        "updatedAt": "2025-03-24T14:35:00-03:00",
+        "fullTime": {
+          "homeWin": 2.1,
+          "draw": 3.2,
+          "awayWin": 3.5
+        }
+      },
+      "winProbability": {
+        "home": 45,
+        "draw": 30,
+        "away": 25
+      },
+      "eventProbabilities": [
+        { "key": "over_2_5", "label": "Mais de 2.5 gols", "probability": 61, "iconType": "globe" },
+        { "key": "under_2_5", "label": "Menos de 2.5 gols", "probability": 39, "iconType": "globe" },
+        { "key": "both_teams_score", "label": "Ambas marcam", "probability": 55, "iconType": "flag" },
+        { "key": "red_card", "label": "Cartão vermelho", "probability": 22, "iconType": "card" }
+      ],
+      "comparison": {
+        "home": { "attack": 82, "defense": 78, "momentum": 70, "possession": 51 },
+        "away": { "attack": 79, "defense": 75, "momentum": 68, "possession": 49 }
+      },
+      "recentForm": {
+        "home": ["W", "D", "W", "L", "W"],
+        "away": ["D", "W", "W", "D", "L"]
+      },
+      "aiAnalysis": {
+        "favoredTeam": "home",
+        "favoredTeamName": "Atlético MG",
+        "confidence": 51,
+        "summary": "Jogo equilibrado. Atlético tem vantagem do mando, mas São Paulo vem de sequência positiva fora de casa."
+      }
+    }
+  }
+]

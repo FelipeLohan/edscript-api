@@ -63,7 +63,7 @@ public class MatchesController {
         return ResponseEntity.ok(matchesService.getUpcomingMatches(sportId, leagueId));
     }
 
-    @Operation(summary = "Detalhes de evento ao vivo por id", description = "Retorna os detalhes de um evento específico via B365 API (v1/event/view)")
+    @Operation(summary = "Detalhes de partida por id", description = "Retorna os detalhes de um evento específico via B365 API (v1/event/view)")
     @ApiResponse(responseCode = "200", description = "Detalhes do evento retornados com sucesso")
     @GetMapping("/play/{id}")
     public ResponseEntity<Object> getPlayEventView(

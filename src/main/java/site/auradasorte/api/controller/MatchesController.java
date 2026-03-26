@@ -81,4 +81,15 @@ public class MatchesController {
             @Parameter(description = "ID do evento na B365", required = true) @RequestParam(name = "match_id") String matchId) {
         return ResponseEntity.ok(matchesService.analyzeMatch(matchId));
     }
+
+    @Operation(summary = "Buscar análise de partida por ID", description = "Retorna a análise de uma partida diretamente do serviço de dados")
+    @ApiResponses({
+        @ApiResponse(responseCode = "200", description = "Análise retornada com sucesso"),
+        @ApiResponse(responseCode = "404", description = "Análise não encontrada")
+    })
+    @GetMapping("/analyze/{matchId}")
+    public ResponseEntity<Object> getMatchAnalysis(
+            @Parameter(description = "ID da partida no serviço de análise", required = true) @PathVariable String matchId) {
+        return ResponseEntity.ok(matchesService.getMatchAnalysis(matchId));
+    }
 }

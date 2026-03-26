@@ -84,4 +84,14 @@ public class MatchesService {
                 .retrieve()
                 .body(Object.class);
     }
+
+    public Object getMatchAnalysis(String matchId) {
+        Object matchData = getPlayEventView(matchId);
+
+        return analysisClient.post()
+                .uri("/matches/analyze/{matchId}", matchId)
+                .body(matchData)
+                .retrieve()
+                .body(Object.class);
+    }
 }

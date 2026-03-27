@@ -101,4 +101,15 @@ public class MatchesController {
         }
         return ResponseEntity.ok(response);
     }
+
+    @Operation(summary = "Buscar análise de dashboard da partida por ID", description = "Retorna a análise de uma partida diretamente do serviço de dados")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Análise retornada com sucesso"),
+            @ApiResponse(responseCode = "404", description = "Análise não encontrada")
+    })
+    @GetMapping("/dashboard/{match_id}")
+    public ResponseEntity<Object> getMatchDashboard(
+            @Parameter(description = "ID da partida no serviço de dashboard", required = true) @PathVariable("match_id") String matchId) {
+        return ResponseEntity.ok(matchesService.getMatchDashboard(matchId));
+    }
 }

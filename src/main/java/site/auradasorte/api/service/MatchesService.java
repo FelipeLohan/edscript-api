@@ -148,4 +148,14 @@ public class MatchesService {
                 "details", details
         );
     }
+
+    public Object getMatchDashboard(String matchId) {
+        Object matchData = getPlayEventView(matchId);
+
+        return analysisClient.post()
+                .uri("/matches/dashboard/{match_id}", matchId)
+                .body(matchData)
+                .retrieve()
+                .body(Object.class);
+    }
 }

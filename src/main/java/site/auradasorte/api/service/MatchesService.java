@@ -3,11 +3,13 @@ package site.auradasorte.api.service;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.client.SimpleClientHttpRequestFactory;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClient;
 
 import java.io.IOException;
+import java.util.Map;
 
 @Service
 public class MatchesService {
@@ -15,6 +17,8 @@ public class MatchesService {
     private final RestClient betClient;
     private final RestClient analysisClient;
     private final ObjectMapper objectMapper;
+    private final int analysisMaxAttempts;
+    private final long analysisBackoffMs;
 
     @Value("${bet.token}")
     private String token;
@@ -22,15 +26,27 @@ public class MatchesService {
     public MatchesService(
             @Value("${bet.base-url}") String betBaseUrl,
             @Value("${analysis.base-url}") String analysisBaseUrl,
+            @Value("${integration.http.connect-timeout-ms:3000}") int connectTimeoutMs,
+            @Value("${integration.http.read-timeout-ms:8000}") int readTimeoutMs,
+            @Value("${integration.analysis.max-attempts:3}") int analysisMaxAttempts,
+            @Value("${integration.analysis.backoff-ms:300}") long analysisBackoffMs,
             ObjectMapper objectMapper) {
-        this.betClient = RestClient.builder()
-                .baseUrl(betBaseUrl)
-                .build();
-        this.analysisClient = RestClient.builder()
-                .baseUrl(analysisBaseUrl)
-                .build();
+        this.betClient = buildClient(betBaseUrl, connectTimeoutMs, readTimeoutMs);
+        this.analysisClient = buildClient(analysisBaseUrl, connectTimeoutMs, readTimeoutMs);
+        this.analysisMaxAttempts = Math.max(1, analysisMaxAttempts);
+        this.analysisBackoffMs = Math.max(0, analysisBackoffMs);
         this.objectMapper = objectMapper;
     }
+
+        private RestClient buildClient(String baseUrl, int connectTimeoutMs, int readTimeoutMs) {
+        var requestFactory = new SimpleClientHttpRequestFactory();
+        requestFactory.setConnectTimeout(connectTimeoutMs);
+        requestFactory.setReadTimeout(readTimeoutMs);
+        return RestClient.builder()
+            .requestFactory(requestFactory)
+            .baseUrl(baseUrl)
+            .build();
+        }
 
     public JsonNode getMatches() {
         try {
@@ -73,25 +89,63 @@ public class MatchesService {
     }
 
     public Object analyzeMatch(String matchId) {
-        Object matchData = betClient.get()
-                .uri("/v3/event/view?token={token}&event_id={matchId}", token, matchId)
-                .retrieve()
-                .body(Object.class);
-
-        return analysisClient.post()
-                .uri("/analyze")
-                .body(matchData)
-                .retrieve()
-                .body(Object.class);
+        try {
+            Object matchData = getPlayEventView(matchId);
+            return postAnalysisWithRetry(matchId, matchData);
+        } catch (Exception e) {
+            return buildAnalysisError(matchId, e);
+        }
     }
 
     public Object getMatchAnalysis(String matchId) {
-        Object matchData = getPlayEventView(matchId);
+        try {
+            Object matchData = getPlayEventView(matchId);
+            return postAnalysisWithRetry(matchId, matchData);
+        } catch (Exception e) {
+            return buildAnalysisError(matchId, e);
+        }
+    }
 
-        return analysisClient.post()
-                .uri("/matches/analyze/{matchId}", matchId)
-                .body(matchData)
-                .retrieve()
-                .body(Object.class);
+    private Object postAnalysisWithRetry(String matchId, Object matchData) {
+        RuntimeException lastError = null;
+
+        for (int attempt = 1; attempt <= analysisMaxAttempts; attempt++) {
+            try {
+                return analysisClient.post()
+                        .uri("/matches/analyze/{matchId}", matchId)
+                        .body(matchData)
+                        .retrieve()
+                        .body(Object.class);
+            } catch (RuntimeException e) {
+                lastError = e;
+                if (attempt == analysisMaxAttempts) {
+                    break;
+                }
+                if (analysisBackoffMs > 0) {
+                    try {
+                        Thread.sleep(analysisBackoffMs);
+                    } catch (InterruptedException interrupted) {
+                        Thread.currentThread().interrupt();
+                        throw new RuntimeException("Retry interrompido durante chamada de analise.", interrupted);
+                    }
+                }
+            }
+        }
+
+        if (lastError != null) {
+            throw lastError;
+        }
+        throw new RuntimeException("Falha desconhecida ao consultar servico de analise.");
+    }
+
+    private Map<String, Object> buildAnalysisError(String matchId, Exception e) {
+        String details = e.getMessage() == null ? "Erro sem detalhes." : e.getMessage();
+        return Map.of(
+                "status", "error",
+                "code", "ANALYSIS_UNAVAILABLE",
+                "message", "Nao foi possivel consultar o servico de analise no momento.",
+                "match_id", matchId,
+                "details", details
+        );
     }
 }

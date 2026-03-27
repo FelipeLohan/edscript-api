@@ -40,7 +40,7 @@ public class MatchesController {
     @GetMapping("/{matchId}")
     public ResponseEntity<Object> getMatchById(
             @Parameter(description = "ID da partida", required = true) @PathVariable String matchId) {
-        var match = matchesService.getMatchById(matchId);
+        Object match = matchesService.getMatchById(matchId);
         if (match == null) {
             return ResponseEntity.notFound().build();
         }

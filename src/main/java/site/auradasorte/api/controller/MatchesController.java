@@ -5,6 +5,7 @@ import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import java.util.Map;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -79,7 +80,11 @@ public class MatchesController {
     @GetMapping("/analyze")
     public ResponseEntity<Object> analyzeMatch(
             @Parameter(description = "ID do evento na B365", required = true) @RequestParam(name = "match_id") String matchId) {
-        return ResponseEntity.ok(matchesService.analyzeMatch(matchId));
+        Object response = matchesService.analyzeMatch(matchId);
+        if (response instanceof Map<?, ?> responseMap && "error".equals(responseMap.get("status"))) {
+            return ResponseEntity.status(502).body(response);
+        }
+        return ResponseEntity.ok(response);
     }
 
     @Operation(summary = "Buscar análise de partida por ID", description = "Retorna a análise de uma partida diretamente do serviço de dados")
@@ -90,6 +95,10 @@ public class MatchesController {
     @GetMapping("/analyze/{matchId}")
     public ResponseEntity<Object> getMatchAnalysis(
             @Parameter(description = "ID da partida no serviço de análise", required = true) @PathVariable String matchId) {
-        return ResponseEntity.ok(matchesService.getMatchAnalysis(matchId));
+        Object response = matchesService.getMatchAnalysis(matchId);
+        if (response instanceof Map<?, ?> responseMap && "error".equals(responseMap.get("status"))) {
+            return ResponseEntity.status(502).body(response);
+        }
+        return ResponseEntity.ok(response);
     }
 }
